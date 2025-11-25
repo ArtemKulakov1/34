@@ -1,0 +1,79 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_wine
+
+# Налаштування стилю графіків
+sns.set(style="whitegrid")
+plt.rcParams['figure.figsize'] = (8,5)
+
+# ===============================
+# 1. Titanic Dataset
+# ===============================
+titanic = sns.load_dataset('titanic')
+
+# Гістограма віку
+sns.histplot(titanic['age'], bins=30, kde=True, color='skyblue')
+plt.title('Titanic: Розподіл віку пасажирів')
+plt.show()
+
+# Кількість пасажирів за статтю
+sns.countplot(x='sex', data=titanic, palette='pastel')
+plt.title('Titanic: Кількість пасажирів за статтю')
+plt.show()
+
+# Виживання за класом
+sns.countplot(x='pclass', hue='survived', data=titanic, palette='Set2')
+plt.title('Titanic: Виживання за класом')
+plt.show()
+
+# Кореляційна матриця
+sns.heatmap(titanic.corr(), annot=True, cmap='coolwarm')
+plt.title('Titanic: Кореляції числових фіч')
+plt.show()
+
+
+# ===============================
+# 2. Wine Dataset
+# ===============================
+wine_data = load_wine()
+wine = pd.DataFrame(wine_data.data, columns=wine_data.feature_names)
+wine['target'] = wine_data.target
+
+# Pairplot для взаємозв'язків фіч
+sns.pairplot(wine, hue='target', palette='Set1')
+plt.suptitle('Wine: Pairplot', y=1.02)
+plt.show()
+
+# Boxplot для алкоголю по класам вина
+sns.boxplot(x='target', y='alcohol', data=wine, palette='Set2')
+plt.title('Wine: Розподіл алкоголю по класах')
+plt.show()
+
+# Heatmap кореляції
+sns.heatmap(wine.corr(), annot=True, cmap='viridis')
+plt.title('Wine: Кореляції фіч')
+plt.show()
+
+
+# ===============================
+# 3. Iris Dataset
+# ===============================
+iris = sns.load_dataset('iris')
+
+# Pairplot
+sns.pairplot(iris, hue='species', palette='bright')
+plt.suptitle('Iris: Pairplot', y=1.02)
+plt.show()
+
+# Boxplot для довжини пелюстки
+sns.boxplot(x='species', y='petal_length', data=iris, palette='Pastel1')
+plt.title('Iris: Довжина пелюстки по виду')
+plt.show()
+
+# Scatterplot Sepal
+sns.scatterplot(x='sepal_length', y='sepal_width', hue='species', data=iris, palette='Set1')
+plt.title('Iris: Sepal Length vs Sepal Width')
+plt.show()
+
+
